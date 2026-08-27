@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1">
+<title>Happy Raksha Bandhan, Shreya ❤️</title>
+<meta name="description" content="A little digital gift for my sister Shreya, this Raksha Bandhan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Marcellus&family=Mukta:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- =============== CUSTOM CURSOR (desktop only) =============== -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- =============== AMBIENT CANVAS LAYERS =============== -->
+<canvas id="particleCanvas"></canvas>
+<div class="mandala-layer" aria-hidden="true">
+  <div class="mandala mandala--one"></div>
+  <div class="mandala mandala--two"></div>
+</div>
+<div class="light-rays" aria-hidden="true"></div>
+
+<!-- =============== CINEMATIC INTRO =============== -->
+<section id="intro" class="intro">
+  <div class="intro__particles" id="introParticles"></div>
+  <div class="intro__diya">
+    <div class="diya">
+      <div class="diya__flame"></div>
+      <div class="diya__glow"></div>
+      <div class="diya__base"></div>
+    </div>
+  </div>
+
+  <div class="intro__text-stack" id="introTextStack">
+    <p class="intro__line" data-line="1">Hey Shreya&hellip;</p>
+    <p class="intro__line" data-line="2">I made something for you.</p>
+    <p class="intro__line" data-line="3">Not something expensive&hellip;</p>
+    <p class="intro__line" data-line="4">Just something from your brother's heart. <span class="heart">❤️</span></p>
+  </div>
+
+  <button class="btn btn--gift" id="openGiftBtn" aria-label="Open your gift">
+    <span class="btn__shimmer"></span>
+    <span class="btn__label">OPEN YOUR GIFT <span aria-hidden="true">🎁</span></span>
+  </button>
+
+  <p class="intro__hint">for the best experience, turn your sound on 🔊</p>
+</section>
+
+<!-- =============== TRANSITION BURST =============== -->
+<div class="burst-overlay" id="burstOverlay" aria-hidden="true"></div>
+
+<!-- =============== MAIN SITE =============== -->
+<main id="main" class="main" hidden>
+
+  <!-- MUSIC CONTROL -->
+  <div class="music-widget" id="musicWidget">
+    <button class="music-widget__btn" id="musicToggle" aria-label="Play music">
+      <span class="vinyl">
+        <span class="vinyl__center"></span>
+      </span>
+      <span class="music-note">🎵</span>
+    </button>
+    <div class="music-widget__panel" id="musicPanel">
+      <button data-action="play" id="musicPlay">▶ Play</button>
+      <button data-action="mute" id="musicMute">🔇 Mute</button>
+    </div>
+  </div>
+  <audio id="bgMusic" loop preload="none">
+    <source src="assets/music/raksha-bandhan.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero__mandala"><div class="mandala-svg"></div></div>
+
+    <div class="hero__content">
+      <p class="hero__eyebrow reveal-line">a little celebration, just for you</p>
+      <h1 class="hero__title">
+        <span class="reveal-line">Happy Raksha Bandhan</span>
+        <span class="hero__name reveal-line" id="heroName">Shreya <span class="heart">❤️</span></span>
+      </h1>
+      <p class="hero__subtitle reveal-line">From your annoying brother.</p>
+
+      <div class="rakhi-stage" id="rakhiStage">
+        <div class="rakhi-glow"></div>
+        <div class="rakhi" id="rakhi" tabindex="0" aria-label="Interactive rakhi, hover or touch it">
+          <svg viewBox="0 0 300 300" class="rakhi-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="goldGrad" cx="50%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#fff3d6"/>
+                <stop offset="45%" stop-color="#f0c96a"/>
+                <stop offset="100%" stop-color="#a9761c"/>
+              </radialGradient>
+              <radialGradient id="gemGrad" cx="40%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#ffdca6"/>
+                <stop offset="55%" stop-color="#d8283f"/>
+                <stop offset="100%" stop-color="#6d0f1e"/>
+              </radialGradient>
+              <linearGradient id="threadGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#c0122c"/>
+                <stop offset="100%" stop-color="#7c0a1c"/>
+              </linearGradient>
+            </defs>
+            <path class="rakhi-thread" d="M20,150 Q 90,40 150,150 Q 210,260 280,150" fill="none" stroke="url(#threadGrad)" stroke-width="6" stroke-linecap="round"/>
+            <g class="rakhi-petals">
+              <circle cx="150" cy="150" r="78" fill="none" stroke="url(#goldGrad)" stroke-width="2" opacity="0.5"/>
+              <g id="petalGroup"></g>
+            </g>
+            <circle cx="150" cy="150" r="58" fill="url(#goldGrad)" stroke="#7a5312" stroke-width="2"/>
+            <circle cx="150" cy="150" r="58" fill="none" stroke="#fff6df" stroke-width="1" opacity="0.6"/>
+            <circle cx="150" cy="150" r="38" fill="url(#gemGrad)" stroke="#3d0a12" stroke-width="2"/>
+            <circle cx="150" cy="150" r="14" fill="#ffe9b8" opacity="0.9"/>
+            <g class="rakhi-pearls" id="pearlGroup"></g>
+          </svg>
+          <div class="rakhi-sparkles" id="rakhiSparkles"></div>
+        </div>
+      </div>
+
+      <a href="#bond" class="scroll-cta reveal-line">
+        <span>OUR STORY</span>
+        <span class="scroll-cta__arrow">↓</span>
+      </a>
+    </div>
+
+    <div class="hero__diyas">
+      <div class="diya diya--sm diya--left"><div class="diya__flame"></div><div class="diya__glow"></div><div class="diya__base"></div></div>
+      <div class="diya diya--sm diya--right"><div class="diya__flame"></div><div class="diya__glow"></div><div class="diya__base"></div></div>
+    </div>
+  </section>
+
+  <!-- ============ OUR BOND ============ -->
+  <section class="bond" id="bond">
+    <div class="section-heading">
+      <p class="eyebrow reveal-up">why we tell each other everything and nothing at all</p>
+      <h2 class="reveal-up">One Rakhi. One Bond. A Lifetime.</h2>
+      <p class="section-sub reveal-up">Some relationships don't need explaining.</p>
+    </div>
+
+    <div class="bond-cards">
+      <article class="bond-card" data-tilt>
+        <div class="bond-card__glow"></div>
+        <h3>Partners in Crime <span aria-hidden="true">😈</span></h3>
+        <p>Because somehow we always end up getting into something.</p>
+      </article>
+      <article class="bond-card" data-tilt>
+        <div class="bond-card__glow"></div>
+        <h3>Professional Fighters <span aria-hidden="true">😂</span></h3>
+        <p>Arguments today. Laughing together tomorrow.</p>
+      </article>
+      <article class="bond-card" data-tilt>
+        <div class="bond-card__glow"></div>
+        <h3>My Built-In Family <span aria-hidden="true">❤️</span></h3>
+        <p>No matter where life takes us, you're still my sister.</p>
+      </article>
+      <article class="bond-card" data-tilt>
+        <div class="bond-card__glow"></div>
+        <h3>Forever &amp; Always <span aria-hidden="true">🫶</span></h3>
+        <p>Some bonds don't need a reminder.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ LETTER ============ -->
+  <section class="letter-section" id="letter">
+    <div class="section-heading">
+      <p class="eyebrow reveal-up">this part is just between us</p>
+      <h2 class="reveal-up">A Little Letter For Shreya <span aria-hidden="true">💌</span></h2>
+    </div>
+
+    <div class="envelope-stage" id="envelopeStage">
+      <div class="envelope" id="envelope" tabindex="0" role="button" aria-label="Open the letter">
+        <div class="envelope__back"></div>
+        <div class="envelope__letter" id="envelopeLetter">
+          <div class="letter-paper" id="letterPaper">
+            <p class="letter-line">Dear Shreya,</p>
+            <p class="letter-line">I know I don't always say it&hellip;</p>
+            <p class="letter-line">and I probably annoy you more than I should <span aria-hidden="true">😂</span></p>
+            <p class="letter-line">But today I wanted to remind you of something.</p>
+            <p class="letter-line">I'm really lucky to have you as my sister.</p>
+            <p class="letter-line">We've laughed.</p>
+            <p class="letter-line">We've argued.</p>
+            <p class="letter-line">We've annoyed each other.</p>
+            <p class="letter-line">We've made memories.</p>
+            <p class="letter-line">And somehow, through everything, we've always been family.</p>
+            <p class="letter-line">A Rakhi is just a thread&hellip;</p>
+            <p class="letter-line">but what it represents means so much more.</p>
+            <p class="letter-line">No matter how much we fight,</p>
+            <p class="letter-line">no matter how much I annoy you,</p>
+            <p class="letter-line">and no matter where life takes us&hellip;</p>
+            <p class="letter-line">I'll always be your brother.</p>
+            <p class="letter-line">Thank you for being my sister.</p>
+            <p class="letter-line letter-line--signoff">Happy Raksha Bandhan, Shreya. <span aria-hidden="true">❤️</span></p>
+            <p class="letter-line letter-line--signature">With love,<br>Your annoying brother.</p>
+          </div>
+        </div>
+        <div class="envelope__flap"></div>
+        <div class="envelope__front"></div>
+        <div class="envelope__seal">
+          <span>tap to open</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="quiz-section" id="quiz">
+    <div class="section-heading">
+      <p class="eyebrow reveal-up">a very scientific test</p>
+      <h2 class="reveal-up">Okay Shreya&hellip; Let's See If You Actually Know Your Brother <span aria-hidden="true">👀</span></h2>
+    </div>
+
+    <div class="quiz-card" id="quizCard">
+      <div class="quiz-progress"><span id="quizProgressFill"></span></div>
+
+      <div class="quiz-question" data-q="0">
+        <p class="quiz-question__text">Who is more annoying?</p>
+        <div class="quiz-options">
+          <button class="quiz-option">Shreya <span aria-hidden="true">😂</span></button>
+          <button class="quiz-option">Brother <span aria-hidden="true">😎</span></button>
+          <button class="quiz-option">Both <span aria-hidden="true">😭</span></button>
+        </div>
+      </div>
+
+      <div class="quiz-question" data-q="1" hidden>
+        <p class="quiz-question__text">Who starts most arguments?</p>
+        <div class="quiz-options">
+          <button class="quiz-option">Shreya</button>
+          <button class="quiz-option">Brother</button>
+          <button class="quiz-option">It's complicated <span aria-hidden="true">😂</span></button>
+        </div>
+      </div>
+
+      <div class="quiz-question" data-q="2" hidden>
+        <p class="quiz-question__text">Who secretly cares more?</p>
+        <div class="quiz-options">
+          <button class="quiz-option">Shreya <span aria-hidden="true">❤️</span></button>
+          <button class="quiz-option">Brother <span aria-hidden="true">❤️</span></button>
+          <button class="quiz-option">Both</button>
+        </div>
+      </div>
+
+      <div class="quiz-result" id="quizResult" hidden>
+        <p class="quiz-result__label">RESULT</p>
+        <p class="quiz-result__text">100% Certified Sibling Chaos <span aria-hidden="true">😂❤️</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROMISE ============ -->
+  <section class="promise-section" id="promise">
+    <div class="section-heading">
+      <p class="eyebrow reveal-up">one thread, one word</p>
+      <h2 class="reveal-up">One Promise</h2>
+    </div>
+
+    <div class="promise-thread-wrap">
+      <svg class="promise-thread" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
+        <path id="promisePath" d="M0,60 C 150,10 250,110 400,60 C 550,10 650,110 800,60 C 900,30 950,80 1000,60" fill="none" stroke="url(#promiseGrad)" stroke-width="3" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="promiseGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#f3d68a"/>
+            <stop offset="100%" stop-color="#caa14a"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="promise-lines">
+      <p class="promise-line reveal-up">Life will change.</p>
+      <p class="promise-line reveal-up">People will change.</p>
+      <p class="promise-line reveal-up">Everything around us will change.</p>
+      <p class="promise-line promise-line--big reveal-up">But you'll always have your brother.</p>
+      <p class="promise-line promise-line--gold reveal-up">That's my promise. <span aria-hidden="true">❤️</span></p>
+    </div>
+  </section>
+
+  <!-- ============ FINAL SURPRISE ============ -->
+  <section class="final-section" id="final">
+    <div class="final-section__particles" id="finalParticles"></div>
+    <div class="final-pre" id="finalPre">
+      <p class="eyebrow reveal-up">one more thing&hellip;</p>
+      <button class="btn btn--final" id="finalBtn">THERE'S ONE LAST THING&hellip; <span aria-hidden="true">🎁</span></button>
+    </div>
+
+    <div class="final-reveal" id="finalReveal" hidden>
+      <div class="final-heart">
+        <span class="final-heart__glyph">❤</span>
+      </div>
+      <div class="final-text-stack" id="finalTextStack">
+        <p class="final-line" data-line="1">Shreya&hellip;</p>
+        <p class="final-line" data-line="2">Thank you for being my sister.</p>
+        <p class="final-line" data-line="3">Thank you for all the memories.</p>
+        <p class="final-line" data-line="4">And thank you for giving me a reason to call someone&hellip;</p>
+        <p class="final-line" data-line="5">&hellip;my sister. <span aria-hidden="true">❤️</span></p>
+      </div>
+
+      <div class="final-big" id="finalBig">
+        <h2>HAPPY RAKSHA BANDHAN</h2>
+        <p class="final-big__name">SHREYA <span aria-hidden="true">❤️</span></p>
+        <p class="final-big__from">From your annoying brother.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>made with a little chaos and a lot of love, for Shreya <span aria-hidden="true">❤️</span></p>
+  </footer>
+</main>
+
+<canvas id="celebrationCanvas"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
